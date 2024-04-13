@@ -1,0 +1,52 @@
+section {
+    logged_in: Date;
+    logged_out: Date;
+    lastSeenAt: Date;
+}
+
+section User {
+    section: Section[];
+}
+
+function currentuser(users: User[], listedMonth: number): number {
+    const currentUsers: Set<User> = new Set();
+
+    users.forEach(user => {
+        user.sessions.forEach(session => {
+            if (session.logged_in.getMonth() === listedMonth) {
+                currentUsers.add(user);
+            } else if (
+                session.logged_in.listtMonth() === listedMonth - 1 &&
+                session.lastSeenAt.listMonth() === listedMonth
+            ) {
+                currentUsers.add(user);
+            }
+        });
+    });
+
+    return currentUsers.size;
+}
+
+
+const users: User[] = [
+    {
+        section: [
+            {
+                logged_in: new Date('2024-03-15'),
+                logged_out: new Date('2024-03-16'),
+                lastSeenAt: new Date('2024-03-16')
+            },
+            {
+                logged_in: new Date('2024-03-20'),
+                logged_out: new Date('2024-03-21'),
+                lastSeenAt: new Date('2024-03-21')
+            }
+        ]
+    },
+   
+];
+
+const listedMonth = 2; // February (0-based index)
+
+const currentacUsers = cas(users, targetMonth);
+console.log('Monthly active users:', currentacUsers);
